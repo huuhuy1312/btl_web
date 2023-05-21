@@ -49,5 +49,6 @@ public class Account {
 		this.isSell = isSell;
 		this.isAdmin = isAdmin;
 	}
+	public Account() {}
 	
 }

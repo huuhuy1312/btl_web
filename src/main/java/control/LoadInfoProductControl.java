@@ -15,26 +15,35 @@ import model.Category;
 import model.Product;
 
 /**
- * Servlet implementation class DetailControll
+ * Servlet implementation class LoadControl
  */
-@WebServlet({ "/detail" })
-public class DetailControll extends HttpServlet {
+@WebServlet("/loadProduct")
+public class LoadInfoProductControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoadInfoProductControl() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html,charset = UTF-8");
-		String cateID = request.getParameter("cid");
+		response.setContentType("text/html;charset = UTF-8");
+		
 		String id = request.getParameter("pid");
 		DAO proDao = new DAO();
 		Product p = proDao.getProbyID(id);
-		request.setAttribute("detail", p);
-		Product lastProduct = proDao.getLastProduct();
 		CategoryDAO catDao = new CategoryDAO();
 		List<Category> listC = catDao.getAllCategory();
-		request.setAttribute("listC", listC);
-		request.setAttribute("lastPro", lastProduct);
-		request.setAttribute("tag", cateID);
-		request.getRequestDispatcher("Detail.jsp").forward(request, response);
+		
+		request.setAttribute("listCC",listC);
+		request.setAttribute("detail", p);
+		request.getRequestDispatcher("Edit.jsp").forward(request, response);
 	}
 
 	/**

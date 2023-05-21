@@ -1,5 +1,7 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +18,11 @@ public class CategoryDAO {
 	public List<Category> getAllCategory()
 	{
 		List<Category> list = new ArrayList<>();
+		String query = "SELECT * FROM category";
 		try {
-			ResultSet rs = new ConnectToDataBase().selectData("SELECT * FROM category");
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ResultSet rs= ps.executeQuery();
 			while(rs.next())
 			{
 				list.add(new Category(
@@ -30,4 +35,14 @@ public class CategoryDAO {
 		}
 		return list;
 	}
+	
+	public static void main(String args[])
+	{
+		
+		CategoryDAO  dao = new CategoryDAO();
+		List<Category> list = new ArrayList<>();
+		list = dao.getAllCategory();
+		System.out.println(list);
+	}
 }
+

@@ -13,7 +13,7 @@ import dao.DAO;
  * Servlet implementation class DeleteControl
  */
 @WebServlet("/delete")
-public class DeleteControl extends HttpServlet {
+public class DeleteProductControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
   

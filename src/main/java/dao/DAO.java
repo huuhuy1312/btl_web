@@ -248,16 +248,75 @@ public class DAO
 			e.printStackTrace();
 		}
 	}
+	public void insertProduct(String name,String image, String price, String title, String description, String category,int sid)
+	{
+		String query = "INSERT INTO product (name, image, price, title,description,cateID,sellID)\n"
+				+"values(?,?,?,?,?,?,?);";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1,name);
+			ps.setString(2,image);
+			ps.setString(3,price);
+			ps.setString(4,title);
+			ps.setString(5,description);
+			ps.setString(6,category);
+			ps.setInt(7,sid);
+			ps.executeUpdate();
+		}catch(Exception e)
+		{
+			
+		}
+	}
+	public void editProduct(String name,String image, String price, String title, String description, String category,String pid)
+	{
+		String query = "update product\n" + 
+				"set name = ?,\n" + 
+				"image = ?,\n" + 
+				"price = ?,\n" + 
+				"title = ?,\r\n" + 
+				"description = ?,\r\n" + 
+				"cateID = ?\n" 
+				+ "where id =?;";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1,name);
+			ps.setString(2,image);
+			ps.setString(3,price);
+			ps.setString(4,title);
+			ps.setString(5,description);
+			ps.setString(6,category);
+			ps.setString(7,pid);
+			ps.executeUpdate();
+		}catch(Exception e)
+		{
+			
+		}
+	}
+	public void addToCart(int soLuong)
+	{
+		String query = "insert into Sorder(soLuong)\r\n" + 
+				"values (?);";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			
+			ps.setInt(1,soLuong);
+			ps.executeUpdate();
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 public static void main(String arg[]) {
 	DAO dao = new DAO();
 	Product pro = new Product(); pro = dao.getProbyID("1");
 	List<Product> list = new ArrayList<>();
-	list = dao.searchProByName("msi");
-	System.out.println(pro);
-	Account acc = dao.login("admin", "123456");
-	System.out.println(acc);
-	dao.signup("huy2", "123456");
-	System.out.println(dao.checkAccountExist("huy2"));
+	list = dao.getAllProduct();
+	dao.addToCart(10);
+	System.out.println(list);
 }
 }
 

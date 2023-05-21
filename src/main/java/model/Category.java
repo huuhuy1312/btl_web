@@ -16,9 +16,12 @@ public class Category {
 		this.cname = cname;
 	}
 	public Category(int cid, String cname) {
-		super();
 		this.cid = cid;
 		this.cname = cname;
+	}
+	public Category()
+	{
+		
 	}
 	
 	

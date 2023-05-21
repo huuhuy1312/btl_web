@@ -8,39 +8,40 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.CategoryDAO;
 import dao.DAO;
-import model.Account;
 import model.Category;
 import model.Product;
 
 /**
- * Servlet implementation class ManagerProductControl
+ * Servlet implementation class DetailControll
  */
-@WebServlet({"/managerProduct" })
-public class ManagerProductControl extends HttpServlet {
+@WebServlet({ "/detail" })
+public class DetailProductControll extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;charset = UTF-8");
-		
-		HttpSession session = request.getSession();
-		Account a = (Account) session.getAttribute("acc");
-		int sid = a.getId();
-		DAO dao = new DAO();
+		response.setContentType("text/html,charset = UTF-8");
+		String cateID = request.getParameter("cid");
+		String id = request.getParameter("pid");
+		DAO proDao = new DAO();
+		Product p = proDao.getProbyID(id);
+		request.setAttribute("detail", p);
+		Product lastProduct = proDao.getLastProduct();
 		CategoryDAO catDao = new CategoryDAO();
 		List<Category> listC = catDao.getAllCategory();
-		List<Product> list = dao.getProbySellId(sid);
-		request.setAttribute("listP", list);
 		request.setAttribute("listC", listC);
-		request.getRequestDispatcher("ManagerProduct.jsp").forward(request, response);
+		request.setAttribute("lastPro", lastProduct);
+		request.setAttribute("tag", cateID);
+		request.getRequestDispatcher("Detail.jsp").forward(request, response);
 	}
 
-	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

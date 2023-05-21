@@ -106,9 +106,7 @@
                 </div>
             </div>
         </div>
-        <c:set var="API_URL" value="https://63e1d6414324b12d963f5108.mockapi.io/api/v11/laptop"/>
-		<c:url var="productUrl" value="${API_URL}" />
-		<c:import url="${productUrl}" var="productList"/>
+        
 
         <div class="container">
             <div class="row">
@@ -128,7 +126,7 @@
                                                 <p class="btn btn-danger btn-block">${o.price}</p>
                                             </div>
                                             <div class="col">
-                                                <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                                                <a href="addToCart?pid=${o.id}" class="btn btn-success btn-block">Add to cart</a>
                                             </div>
                                         </div>
                                     </div>

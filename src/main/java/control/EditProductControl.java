@@ -8,17 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.DAO;
+import model.Account;
+
 /**
- * Servlet implementation class LogoutControl
+ * Servlet implementation class EditControl
  */
-@WebServlet({ "/LogoutControl", "/logout" })
-public class LogoutControl extends HttpServlet {
+@WebServlet("/edit")
+public class EditProductControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutControl() {
+    public EditProductControl() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,11 +30,18 @@ public class LogoutControl extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;charset = UTF-8");
-		HttpSession session = request.getSession();
-		session.removeAttribute("acc");
-		session.removeAttribute("order");
-		response.sendRedirect("home");
+		String pid = request.getParameter("id");
+		String name = request.getParameter("name");
+		String image = request.getParameter("image");
+		String price = request.getParameter("price");
+		String title = request.getParameter("title");
+		String description = request.getParameter("description");
+		String category = request.getParameter("category");
+		
+		
+		DAO dao = new DAO();
+		dao.editProduct(name, image, price, title, description, category, pid);
+		response.sendRedirect("managerProduct");
 	}
 
 	/**

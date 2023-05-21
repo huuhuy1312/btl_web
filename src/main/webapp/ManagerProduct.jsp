@@ -25,6 +25,21 @@
                 width: 200px;
                 height: 120px;
             }
+            .btn-returnMenu{
+            	float: right;
+            	display: flex;
+            	padding: 0;
+
+  				width: 100px;
+  				height: 30px;
+            }
+            .returnHome{
+            	display: block;
+
+            	width: 100%;
+            	height: 100%;
+            	line-height:30px;
+            }
         </style>
     <body>
         <div class="container">
@@ -35,8 +50,8 @@
                             <h2>Manage <b>Product</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="#addEmployeeModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
-                            <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
+                            <a href="#addProductModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
+                            <a href="#deleteProductModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
                         </div>
                     </div>
                 </div>
@@ -72,7 +87,7 @@
                                 </td>
                                 <td>${o.price} $</td>
                                 <td>
-                                    <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="loadProduct?pid=${o.id}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                     <a href="delete?pid=${o.id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                             </tr>
@@ -91,8 +106,13 @@
                         <li class="page-item"><a href="#" class="page-link">Next</a></li>
                     </ul>
                 </div>
+                
             </div>
+           
+            <button class="btn btn-default btn-returnMenu"><a class= "returnHome" href="home">Laptop</a></button>
+    
         </div>
+        
         <!-- Edit Modal HTML -->
         <div id="addEmployeeModal" class="modal fade">
             <div class="modal-dialog">
@@ -127,7 +147,8 @@
                                 <label>Category</label>
                                 <select name="category" class="form-select" aria-label="Default select example">
                                     <c:forEach items="${listC}" var="o">
-                                        <option value="${o.id}">${o.name}</option>
+                                        <option value="${o.cid}">${o.cname}</option>
+               
                                     </c:forEach>
                                 </select>
                             </div>
