@@ -38,52 +38,68 @@ public class AddToCart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int quantity = 1;
 		DAO dao = new DAO();
-		if(request.getParameter("pid") !=null)
+		HttpSession session = request.getSession();
+		Account acc = (Account) session.getAttribute("acc");
+		if(acc!=null)
 		{
-			
-			Product product = dao.getProbyID(request.getParameter("pid"));
-			if(product!=null)
+			if(request.getParameter("pid") !=null)
 			{
-				HttpSession session = request.getSession();
-				if(session.getAttribute("order") == null)
+				
+				Product product = dao.getProbyID(request.getParameter("pid"));
+				if(product!=null)
 				{
 					
-					List<Item> listItems = new ArrayList<Item>();
-					Item item = new Item(product,quantity,product.getPrice());
-					listItems.add(item);
-					Order order = new Order();
-					order.setItems(listItems);
-					session.setAttribute("order", order);
-					dao.addToCart(order.getItems().size());
-				}
-				else
-				{
-					Order order = (Order) session.getAttribute("order");
-					List<Item> listItems = order.getItems();
-					boolean check = false;
-					for(Item item:listItems)
+					if(session.getAttribute("order") == null)
 					{
-						if(item.getProduct().getId() == product.getId())
-						{
-							item.setQuantity(item.getQuantity()+1);
-							check =true;
-						}
-					}
-					if(check == false)
-					{
-						Item item = new Item();
-						item.setQuantity(1);
-						item.setProduct(product);
-						item.setPrice(product.getPrice());
+						
+						List<Item> listItems = new ArrayList<Item>();
+						Item item = new Item(product,quantity,product.getPrice());
 						listItems.add(item);
+						Order order = new Order(acc,listItems,0,(long)item.getProduct().getPrice());
+						order.setShipFee(1);
+						order.setOtherBill();
+						session.setAttribute("order", order);
+						dao.addToCart(order.getItems().size());
 					}
-					session.setAttribute("order", order);
-					dao.addToCart(order.getItems().size());
+					else
+					{
+						Order order = (Order) session.getAttribute("order");
+						List<Item> listItems = order.getItems();
+						boolean check = false;
+						for(Item item:listItems)
+						{
+							if(item.getProduct().getId() == product.getId())
+							{
+								item.setQuantity(item.getQuantity()+1);
+								order.setPriceTotal(order.getPriceTotal()+item.getProduct().getPrice());
+								order.setOtherBill();
+								
+								check =true;
+							}
+						}
+						if(check == false)
+						{
+							Item item = new Item();
+							item.setQuantity(1);
+							item.setProduct(product);
+							item.setPrice(product.getPrice());
+							order.setPriceTotal(order.getPriceTotal()+item.getProduct().getPrice());
+							order.setOtherBill();
+							listItems.add(item);
+						}
+						session.setAttribute("order", order);
+						dao.addToCart(order.getItems().size());
+					}
 				}
+				
 			}
+			response.sendRedirect("home");
 			
 		}
-		response.sendRedirect("home");
+		else {
+			response.sendRedirect("Login.jsp");
+		}
+		
 		
 	}
 

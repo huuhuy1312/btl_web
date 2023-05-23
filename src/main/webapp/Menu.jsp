@@ -12,7 +12,7 @@
                     <ul class="navbar-nav m-auto">
                     <c:if test = "${sessionScope.acc.isAdmin ==1}">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Manager Account</a>
+                            <a class="nav-link" href="home">Manager Account</a>
                         </li>
                      </c:if>
                      <c:if test = "${sessionScope.acc.isSell ==1}">
@@ -22,7 +22,7 @@
                      </c:if>
                         <c:if test = "${sessionScope.acc !=null}">
 	                        <li class="nav-item">
-                            	<a class="nav-link" href="#">Hello ${sessionScope.acc.user}</a>
+                            	<a class="nav-link" href="home">Hello ${sessionScope.acc.user}</a>
                         	</li>
 	                        <li class="nav-item">
 	                            <a class="nav-link" href="logout">Logout</a>

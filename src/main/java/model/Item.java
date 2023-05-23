@@ -4,8 +4,8 @@ public class Item {
 	
 	private Product product;
 	private int quantity;
-	private double price;
-	public Item(Product product, int quantity, double price) {
+	private long price;
+	public Item(Product product, int quantity, long price) {
 		super();
 		
 		this.product = product;
@@ -28,7 +28,7 @@ public class Item {
 	public double getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 }

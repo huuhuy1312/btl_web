@@ -9,6 +9,7 @@ import java.util.List;
 import model.Account;
 import model.ConnectToDataBase;
 import model.Product;
+import model.Voucher;
 
 public class DAO 
 {
@@ -310,13 +311,65 @@ public class DAO
 			e.printStackTrace();
 		}
 	}
+	public List<Voucher> getListVoucherByIDUser(int id)
+	{
+		List<Voucher> list = new ArrayList<>();
+		String query = "Select * from voucher\n"
+				+ "where idUser = ?";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1,id);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next())
+			{
+				list.add(new Voucher(
+						rs.getInt(1),
+						rs.getInt(2),
+						rs.getInt(3),
+						rs.getInt(4),
+						rs.getString(5)));
+			}
+		} catch (Exception e) {
+			System.out.println("ko chay");
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
+	public Voucher getVoucherById(int id)
+	{
+		String query = "select * from voucher \n"
+				+"where id =?";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next())
+			{
+			return new Voucher(rs.getInt(1),
+					rs.getInt(2),
+					rs.getInt(3),
+					rs.getInt(4),
+					rs.getString(5));
+			}
+			
+		} catch (Exception e) {
+			System.out.println("ko chay");
+			e.printStackTrace();
+		}
+		return null;
+	}
 public static void main(String arg[]) {
 	DAO dao = new DAO();
-	Product pro = new Product(); pro = dao.getProbyID("1");
-	List<Product> list = new ArrayList<>();
-	list = dao.getAllProduct();
-	dao.addToCart(10);
-	System.out.println(list);
+//	Product pro = new Product(); pro = dao.getProbyID("1");
+//	List<Product> list = new ArrayList<>();
+//	list = dao.getAllProduct();
+//	dao.addToCart(10);
+	List<Voucher> listVoucher = new ArrayList<>();
+	listVoucher = dao.getListVoucherByIDUser(3);
+	System.out.print(dao.getVoucherById(3));
 }
 }
 

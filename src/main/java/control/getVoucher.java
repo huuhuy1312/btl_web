@@ -1,9 +1,6 @@
 package control;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,53 +9,58 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.DAO;
-import model.Account;
 import model.Order;
-import model.Product;
 import model.Voucher;
 
 /**
- * Servlet implementation class ShowCartControl
+ * Servlet implementation class getVoucher
  */
-@WebServlet("/cartShow")
-public class ShowCartControl extends HttpServlet {
+@WebServlet("/getVoucher")
+public class getVoucher extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowCartControl() {
+    public getVoucher() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html,charset = UTF-8");
-		DAO dao = new DAO();
+		response.setContentType("text/html;charset =UTF-8");
 		HttpSession session = request.getSession();
-		Account acc = (Account)session.getAttribute("acc");
-		Order order = (Order) session.getAttribute("order");
-		
-		if(order!=null)
+		Order order = (Order)session.getAttribute("order");
+		if(order.getPriceTotal() >0)
 		{
+			DAO dao = new DAO();
+			int vid = Integer.parseInt(request.getParameter("vid"));
+			Voucher voucher = dao.getVoucherById(vid);
+			if(order.getVoucher()!=null)
+			{
+			if(order.getVoucher().getId() == voucher.getId())
+			{
+				order.setVoucher(null);
+			}
+			else
+			{
+				order.setVoucher(voucher);
+			}}
+			else {
+				order.setVoucher(voucher);
+			}
 			
-			List<Voucher> listVoucher = new ArrayList<>();
-			listVoucher = dao.getListVoucherByIDUser(acc.getId());
-			request.setAttribute("listVoucher", listVoucher);
-			request.getRequestDispatcher("Cart.jsp").forward(request, response);
-	
+			order.setOtherBill();
+			session.setAttribute("order", order);
+			response.sendRedirect("cartShow");
 		}
 		else {
-			response.sendRedirect("home");
+			response.sendRedirect("cartShow");
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

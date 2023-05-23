@@ -29,7 +29,7 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public double getPrice() {
+	public long getPrice() {
 		return price;
 	}
 	public void setPrice(long price) {
