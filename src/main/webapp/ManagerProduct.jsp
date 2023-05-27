@@ -41,6 +41,15 @@
             	line-height:30px;
             }
         </style>
+        <script>
+        function toggleAll(source) {
+            var checkboxes = document.getElementsByName('options');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
+    </head>
     <body>
         <div class="container">
             <div class="table-wrapper">
@@ -51,18 +60,19 @@
                         </div>
                         <div class="col-sm-6">
                             <a href="#addEmployeeModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
-                            <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
+                            <button type="submit" class="btn btn-danger" form="deleteForm"><i class="material-icons">&#xE15C;</i> <span>Delete</span></button>					
                         </div>
                     </div>
                 </div>
+                <form id="deleteForm" action="deleteCheckBox" method="post">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>
                                 <span class="custom-checkbox">
-                                    <input type="checkbox" id="selectAll">
-                                    <label for="selectAll"></label>
-                                </span>
+                            		<input type="checkbox" id="selectAll" onclick="toggleAll(this)">
+                            		<label for="selectAll"></label>
+                        		</span>
                             </th>
                             <th>ID</th>
                             <th>Name</th>
@@ -73,19 +83,19 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${listP}" var="o">
-                            <tr>
-                                <td>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                        <label for="checkbox1"></label>
-                                    </span>
-                                </td>
-                                <td>${o.id}</td>
-                                <td>${o.name}</td>
-                                <td>
-                                    <img src="${o.image}">
-                                </td>
-                                <td>${o.price} $</td>
+                    <tr>
+                        <td>
+                            <span class="custom-checkbox">
+                                <input type="checkbox" id="checkbox1" name="options" value="${o.id}">
+                                <label for="checkbox1"></label>
+                            </span>
+                        </td>
+                        <td>${o.id}</td>
+                        <td>${o.name}</td>
+                        <td>
+                            <img src="${o.image}">
+                        </td>
+                        <td>${o.price} $</td>
                                 <td>
                                     <a href="loadProduct?pid=${o.id}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                     <a href="delete?pid=${o.id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -94,6 +104,7 @@
                         </c:forEach>
                     </tbody>
                 </table>
+                </form>
                 <div class="clearfix">
                     <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                     <ul class="pagination">
