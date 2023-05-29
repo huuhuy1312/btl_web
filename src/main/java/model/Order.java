@@ -11,7 +11,9 @@ public class Order {
 	private double VAT;
 	private double totalBill;
 	private double shipFee;
+	
 	private Voucher voucher;
+	
 	public Voucher getVoucher() {
 		return voucher;
 	}
@@ -63,9 +65,11 @@ public class Order {
 	{
 		if(t ==0)
 		{
+			
 			this.shipFee =0;
 		}
 		else {
+			
 		Random random = new Random();
         double number = random.nextDouble() * 9 + 1; 
         this.shipFee= Math.round(number * 1000.0) / 1000.0;

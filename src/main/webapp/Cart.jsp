@@ -111,7 +111,7 @@
     </head>
 
     <body>
-			</ul><a href="home" class="btn btn-dark rounded-pill py-2 btn-block">Quay Lại Trang Chủ</a>
+			<a href="home" class="btn btn-dark rounded-pill py-2 btn-block">Quay Lại Trang Chủ</a>
             <div class="shopping-cart">
                 <div class="px-4 px-lg-0">
 
@@ -156,7 +156,8 @@
                                                         <strong>${o.quantity}</strong>
                                                         <a href="IncreaseQuantityCart?pid=${o.getProduct().id }"><button class="btnAdd">+</button></a>
                                                     </td>
-                                                    <td class="align-middle"><a href="#" class="text-dark">
+                                                    <td class="align-middle">
+                                                    	<a href="deleteProInCart?pid=${o.getProduct().id }" class="text-dark">
                                                             <button type="button" class="btn btn-danger">Delete</button>
                                                         </a>
                                                     </td>

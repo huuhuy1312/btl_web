@@ -66,6 +66,11 @@ public class AddToCart extends HttpServlet {
 						Order order = (Order) session.getAttribute("order");
 						List<Item> listItems = order.getItems();
 						boolean check = false;
+						if(listItems.size()==0)
+						{
+							order.setShipFee(1);
+							order.setOtherBill();
+						}
 						for(Item item:listItems)
 						{
 							if(item.getProduct().getId() == product.getId())

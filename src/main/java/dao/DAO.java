@@ -3,11 +3,14 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Account;
 import model.ConnectToDataBase;
+import model.Item;
+import model.Order;
 import model.Product;
 import model.Voucher;
 
@@ -361,7 +364,35 @@ public class DAO
 		}
 		return null;
 	}
-	 
+	public void addOrder(Order order, Timestamp timestamp)
+	{
+		String query =  "insert into sorder(tenNguoiMua,thoiGianDatHang,soLuongSanPham,danhSachSanPham,tongTien)\r\n" + 
+				"values(?,?,?,?,?);";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			
+			ps.setString(1,order.getCustomer().getUser());
+			ps.setTimestamp(2,timestamp);
+			int count = 0;
+			String dssp=  "";
+			List<Item> items = order.getItems();
+			for(Item item: items)
+			{
+				count+=item.getQuantity();
+				dssp+=item.getProduct().getName()+"("+item.getQuantity()+")";
+			}
+			ps.setInt(3, count);
+			ps.setString(4,dssp);
+			ps.setDouble(5,order.getTotalBill());
+			ps.executeUpdate();
+			
+		}catch(Exception e)
+		{
+			
+		}
+	}
+	
 public static void main(String arg[]) {
 	DAO dao = new DAO();
 //	Product pro = new Product(); pro = dao.getProbyID("1");

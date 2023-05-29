@@ -1,6 +1,9 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,23 +15,50 @@ import model.Item;
 import model.Order;
 
 /**
- * Servlet implementation class IncreaseQuantityCart
+ * Servlet implementation class deleteProInCart
  */
-@WebServlet("/IncreaseQuantityCart")
-public class IncreaseQuantityCart extends HttpServlet {
+@WebServlet("/deleteProInCart")
+public class deleteProInCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public deleteProInCart() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;charset = UTF-8"); 
+		
 		HttpSession session = request.getSession();
 		Order order = (Order)session.getAttribute("order");
 		for(Item item:order.getItems())
 		{
 			if(Integer.parseInt(request.getParameter("pid"))== item.getProduct().getId())
 			{
-				item.setQuantity(item.getQuantity()+1);
-				order.setPriceTotal(order.getPriceTotal()+item.getProduct().getPrice());
-				order.setOtherBill();
+
+					List<Item> listItems = new ArrayList<>(order.getItems());
+					for(Item i: listItems)
+					{
+						if(i.equals(item) ==true)
+						{
+							listItems.remove(i);
+							break;
+						}
+					}
+					order.setItems(listItems);
+					order.setPriceTotal(order.getPriceTotal()-item.getProduct().getPrice()*item.getQuantity());
+					if(order.getPriceTotal()==0)
+					{
+						order.setShipFee(0);
+						order.setVoucher(null);
+					}
+					order.setOtherBill();
+
 			}
 			
 		}
@@ -36,6 +66,9 @@ public class IncreaseQuantityCart extends HttpServlet {
 		response.sendRedirect("cartShow");
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
