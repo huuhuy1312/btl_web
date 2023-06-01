@@ -364,10 +364,10 @@ public class DAO
 		}
 		return null;
 	}
-	public void addOrder(Order order, Timestamp timestamp)
+	public void addOrder(Order order, Timestamp timestamp, int uid)
 	{
-		String query =  "insert into sorder(tenNguoiMua,thoiGianDatHang,soLuongSanPham,danhSachSanPham,tongTien)\r\n" + 
-				"values(?,?,?,?,?);";
+		String query =  "insert into sorder(tenNguoiMua,thoiGianDatHang,soLuongSanPham,danhSachSanPham,tongTien,trangthai,uid)\r\n" + 
+				"values(?,?,?,?,?,?,?);";
 		try {
 			Connection conn = new ConnectToDataBase().getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -380,13 +380,93 @@ public class DAO
 			for(Item item: items)
 			{
 				count+=item.getQuantity();
-				dssp+=item.getProduct().getName()+"("+item.getQuantity()+")";
+				dssp+=item.getProduct().getId()+"("+item.getQuantity()+"),";
 			}
+			dssp =dssp.substring(0, dssp.length() - 1);
 			ps.setInt(3, count);
 			ps.setString(4,dssp);
 			ps.setDouble(5,order.getTotalBill());
+			ps.setString(6, "Chưa Thanh Toán");
+			ps.setInt(7, uid);
 			ps.executeUpdate();
 			
+		}catch(Exception e)
+		{
+			
+		}
+	}
+	public List<Order> getListOrderById(int uid, Account acc)
+	{
+		List<Order> list = new ArrayList<>();
+		String query = "select * from sorder \n"
+				+"where uid =?";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, uid);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next())
+			{
+				Order order = new Order();
+				order.setOid(rs.getInt(1));
+				order.setTenNguoiMua(rs.getString(2));
+				order.setThoigiandat(rs.getTimestamp(3));
+				order.setSoLuongSanPham(rs.getInt(4));
+				
+				order.setListitem(rs.getString(5));
+				order.setTotalBill(rs.getDouble(6));
+				order.setStatus(rs.getString(7));
+				order.setUid(rs.getInt(8));
+				list.add(order);
+			}
+			return list;
+		} catch (Exception e) {
+			System.out.println("ko chay");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public Order getOrderById(int oid)
+	{
+		
+		String query = "select * from sorder \n"
+				+"where oid =?";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, oid);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next())
+			{
+				Order order = new Order();
+				order.setOid(rs.getInt(1));
+				order.setTenNguoiMua(rs.getString(2));
+				order.setThoigiandat(rs.getTimestamp(3));
+				order.setSoLuongSanPham(rs.getInt(4));
+				order.setListitem(rs.getString(5));
+				order.setTotalBill(rs.getDouble(6));
+				order.setStatus(rs.getString(7));
+				order.setUid(rs.getInt(8));
+				return order;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("ko chay");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public void editOrderByID(String oid)
+	{
+		String query = "update sorder\n" + 
+				"set trangthai = ?\n" 
+				+ "where oid =?;";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1,"Đã Thanh Toán");
+			ps.setString(2,oid);
+			ps.executeUpdate();
 		}catch(Exception e)
 		{
 			
@@ -401,7 +481,12 @@ public static void main(String arg[]) {
 //	dao.addToCart(10);
 	List<Voucher> listVoucher = new ArrayList<>();
 	listVoucher = dao.getListVoucherByIDUser(3);
-	System.out.print(dao.getVoucherById(3));
+	
+//	List<Order> listOrder = new ArrayList<>();
+//	listOrder = dao.getListOrderById(3);
+//	System.out.print(listOrder);
+	dao.editOrderByID("2");
+	System.out.print(dao.getOrderById(1));
 }
 }
 

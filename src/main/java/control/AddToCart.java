@@ -55,7 +55,7 @@ public class AddToCart extends HttpServlet {
 						List<Item> listItems = new ArrayList<Item>();
 						Item item = new Item(product,quantity,product.getPrice());
 						listItems.add(item);
-						Order order = new Order(acc,listItems,0,(long)item.getProduct().getPrice());
+						Order order = new Order(acc,listItems,"Chưa Thanh Toán",(long)item.getProduct().getPrice());
 						order.setShipFee(1);
 						order.setOtherBill();
 						session.setAttribute("order", order);

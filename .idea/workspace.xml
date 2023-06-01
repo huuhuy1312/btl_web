@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1be1862d-2fc1-44d0-8941-7c92b8832097" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/AddToCart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/AddToCart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/buy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/buy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/Menu.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/Menu.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/control/AddToCart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/control/AddToCart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/control/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/control/HomeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/control/buy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/control/buy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/DAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Order.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.laptrinhjavaweb/new-jdbc-3/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.laptrinhjavaweb/new-jdbc-3/pom.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2QbHlSiCO6nqicA7yLJ5yn88Ryl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/ADMIN/eclipse-workspace/new-jdbc-3"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1be1862d-2fc1-44d0-8941-7c92b8832097" name="Changes" comment="" />
+      <created>1685615516859</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685615516859</updated>
+    </task>
+    <servers />
+  </component>
+</project>

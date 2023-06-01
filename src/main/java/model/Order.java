@@ -1,16 +1,60 @@
 package model;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Random;
 
 public class Order {
-	private Account customer;
-	private List<Item> items;
-	private int status;
+	private int oid;
+	private String tenNguoiMua;
+	private Timestamp thoigiandat;
+	private int uid;
+	private String status;
 	private long priceTotal;
 	private double VAT;
 	private double totalBill;
 	private double shipFee;
+	public int getOid() {
+		return oid;
+	}
+	public void setOid(int oid) {
+		this.oid = oid;
+	}
+	public String getTenNguoiMua() {
+		return tenNguoiMua;
+	}
+	public void setTenNguoiMua(String tenNguoiMua) {
+		this.tenNguoiMua = tenNguoiMua;
+	}
+	public Timestamp getThoigiandat() {
+		return thoigiandat;
+	}
+	public void setThoigiandat(Timestamp thoigiandat) {
+		this.thoigiandat = thoigiandat;
+	}
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+	private Account customer;
+	private List<Item> items;
+	private String listitem;
+	public String getListitem() {
+		return listitem;
+	}
+	public void setListitem(String listitem) {
+		this.listitem = listitem;
+	}
+	private int soLuongSanPham;
+	public int getSoLuongSanPham() {
+		return soLuongSanPham;
+	}
+	public void setSoLuongSanPham(int soLuongSanPham) {
+		this.soLuongSanPham = soLuongSanPham;
+	}
+	
 	
 	private Voucher voucher;
 	
@@ -42,10 +86,10 @@ public class Order {
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public long getPriceTotal() {
@@ -91,7 +135,7 @@ public class Order {
 		return shipFee;
 	}
 	
-	public Order(Account customer, List<Item> items, int status, long priceTotal) {
+	public Order(Account customer, List<Item> items, String status, long priceTotal) {
 		super();
 		this.customer = customer;
 		this.items = items;
