@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -33,10 +34,13 @@ public class HomeController extends HttpServlet {
 		//Get data from dao
 			
 			DAO proDao = new DAO();
-			List<Product> listP = proDao.getAllProduct();
+			
 			Product lastProduct = proDao.getLastProduct();
 			CategoryDAO catDao = new CategoryDAO();
 			List<Category> listC = catDao.getAllCategory();
+			int totalPro = proDao.getTotalProduct();
+			List<Product> listP = new ArrayList<>();
+			String startProIndex = request.getParameter("index");
 		//Set data to jsp
 			HttpSession session = request.getSession();
 			Account acc = (Account)session.getAttribute("acc");
@@ -44,6 +48,21 @@ public class HomeController extends HttpServlet {
 			{
 			List<Order> listOrder = proDao.getListOrderById(acc.getId(), acc);
 			request.setAttribute("listOrder", listOrder);
+			}
+			if(totalPro%6==0)
+			{
+			request.setAttribute("endP", totalPro/6);
+			}
+			else {
+				request.setAttribute("endP", totalPro/6+1);
+			}
+			if(startProIndex == null)
+			{
+				listP = proDao.pagingProduct(1);
+			}
+			else
+			{
+				listP = proDao.pagingProduct(Integer.parseInt(startProIndex));
 			}
 			request.setAttribute("listP", listP);
 			request.setAttribute("listC", listC);

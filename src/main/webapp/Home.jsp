@@ -87,7 +87,9 @@
 			a .active{
 			    color: white;
 			}
-			
+			.phantrang{
+				    margin-left: 50%;
+			}
 			
         </style>
     </head>
@@ -140,7 +142,16 @@
 
             </div>
         </div>
+		<div class="phantrang">
+			<ul class="pagination">
+			<c:forEach begin ="1" end="${endP }" var="n">
 
+				<li class="page-item"><a href="home?index=${n}" class="page-link">${n}</a></li>
+			</c:forEach>
+			</ul>
+			
+		</div>
+		
         <!-- Footer -->
         <jsp:include page="Footer.jsp"></jsp:include>
     </body>

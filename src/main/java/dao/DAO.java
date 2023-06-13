@@ -472,21 +472,67 @@ public class DAO
 			
 		}
 	}
-	
+	public int getTotalProduct()
+	{
+		String query ="Select count(*) from product";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next())
+			{
+				return rs.getInt(1);
+			}
+		}catch(Exception e){
+			
+		}
+		return 0;
+	}
+	public List<Product> pagingProduct(int index)
+	{
+		List<Product> list = new ArrayList<>();
+		String query= "SELECT * FROM product\n"+
+				"ORDER BY id\n"+
+				"LIMIT 6 OFFSET ?;";
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1,(index-1)*6);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next())
+			{
+				list.add(new Product(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getLong(4),
+						rs.getString(5),
+						rs.getString(6)
+						));
+			}
+		}catch(Exception e)
+		{
+			
+		}
+		return list;
+	}
 public static void main(String arg[]) {
-	DAO dao = new DAO();
-//	Product pro = new Product(); pro = dao.getProbyID("1");
+//	DAO dao = new DAO();
+////	Product pro = new Product(); pro = dao.getProbyID("1");
 //	List<Product> list = new ArrayList<>();
-//	list = dao.getAllProduct();
-//	dao.addToCart(10);
-	List<Voucher> listVoucher = new ArrayList<>();
-	listVoucher = dao.getListVoucherByIDUser(3);
+////	list = dao.getAllProduct();
+////	dao.addToCart(10);
+//	List<Voucher> listVoucher = new ArrayList<>();
+//	listVoucher = dao.getListVoucherByIDUser(3);
+//	
+////	List<Order> listOrder = new ArrayList<>();
+////	listOrder = dao.getListOrderById(3);
+////	System.out.print(listOrder);
+//	dao.editOrderByID("2");
+//	System.out.print(dao.getOrderById(1));
+//	list = dao.pagingProduct(1);
+//	System.out.print(list);
 	
-//	List<Order> listOrder = new ArrayList<>();
-//	listOrder = dao.getListOrderById(3);
-//	System.out.print(listOrder);
-	dao.editOrderByID("2");
-	System.out.print(dao.getOrderById(1));
 }
 }
 
