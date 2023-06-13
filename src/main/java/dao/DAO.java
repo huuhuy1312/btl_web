@@ -488,6 +488,24 @@ public class DAO
 		}
 		return 0;
 	}
+	public int getTotalProductBySellID(int sellID)
+	{
+		String query ="Select count(*) from product where sellID=?";
+		
+		try {
+			Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1,sellID);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next())
+			{
+				return rs.getInt(1);
+			}
+		}catch(Exception e){
+			
+		}
+		return 0;
+	}
 	public List<Product> pagingProduct(int index)
 	{
 		List<Product> list = new ArrayList<>();
@@ -516,10 +534,39 @@ public class DAO
 		}
 		return list;
 	}
+	public List<Product> paygingProduct(int index,int sellID) {
+        List<Product> list1 = new ArrayList<>();
+        String query ="SELECT *\n"+
+        		"FROM product \n"+
+        		"where sellID=?\n"+
+        		"ORDER BY id\n"+
+        		"LIMIT 3 OFFSET ?\n";
+                 
+        try {
+        	Connection conn = new ConnectToDataBase().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, sellID);
+			ps.setInt(2,(index-1)*3);
+            ResultSet rs= ps.executeQuery();
+            while(rs.next())
+			{
+				list1.add(new Product(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getLong(4),
+						rs.getString(5),
+						rs.getString(6)
+						));
+			}
+        } catch (Exception e) {
+        }
+        return list1;
+    }
 public static void main(String arg[]) {
-//	DAO dao = new DAO();
+	DAO dao = new DAO();
 ////	Product pro = new Product(); pro = dao.getProbyID("1");
-//	List<Product> list = new ArrayList<>();
+	List<Product> list = new ArrayList<>();
 ////	list = dao.getAllProduct();
 ////	dao.addToCart(10);
 //	List<Voucher> listVoucher = new ArrayList<>();
@@ -530,9 +577,9 @@ public static void main(String arg[]) {
 ////	System.out.print(listOrder);
 //	dao.editOrderByID("2");
 //	System.out.print(dao.getOrderById(1));
-//	list = dao.pagingProduct(1);
-//	System.out.print(list);
-	
+	list = dao.paygingProduct(0, 3);
+	System.out.print(list);
+
 }
 }
 

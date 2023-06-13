@@ -30,9 +30,15 @@ public class ManagerProductControl extends HttpServlet {
 		Account a = (Account) session.getAttribute("acc");
 		int sid = a.getId();
 		DAO dao = new DAO();
+		int totalNumPro = dao.getTotalProductBySellID(a.getId());
+		int totalPage = totalNumPro%3 == 0 ?totalNumPro/3:totalNumPro/3+1;
+		int index = request.getParameter("index")!=null ? Integer.parseInt(request.getParameter("index")):1;
+		
 		CategoryDAO catDao = new CategoryDAO();
 		List<Category> listC = catDao.getAllCategory();
-		List<Product> list = dao.getProbySellId(sid);
+		List<Product> list = dao.paygingProduct(index, a.getId());
+		request.setAttribute("totalNumPro", totalNumPro);
+		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("listP", list);
 		request.setAttribute("listC", listC);
 		request.getRequestDispatcher("ManagerProduct.jsp").forward(request, response);
